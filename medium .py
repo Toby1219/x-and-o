@@ -72,7 +72,7 @@ class GameFuctions(GameAttributes):
             count += 1     
 
     def check_wins(self):
-        """ Check for wins in Coloums, Rows and Vertical """
+        """ Check for wins in Colums, Rows and Vertical """
         board = self.board
 
         # Coloums wins
