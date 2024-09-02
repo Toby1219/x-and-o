@@ -15,7 +15,7 @@ explanation of each files:
 2. the ai gets the best and optimal moves based on the current board state
 
 other fetures:
-1. kepping of score and declearing winner at the end of the game 
+1. kepping of score and declaring winner at the end of the game 
 2. the game can be replayed multiple times 
 
 To run scripts: you need python 3 or newer version
