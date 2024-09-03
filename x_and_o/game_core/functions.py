@@ -1,8 +1,5 @@
-from .Logs import logger_func
 from .board import Board
 from rich import print
-
-log = logger_func('functions.py', 'function')
 
 class GameAttributes(Board):
     def __init__(self) -> None:
@@ -62,9 +59,6 @@ class GameAttributes(Board):
         self.valid_gametype = ('ai vs ai', 'ai v ai', 'a vs a', 'a v a',  
                                'player vs player',  'player v player', 'p vs p', 
                                'p v p', ' ', 'none')
-
-
-        log.info('Initialized Game functions')
 
 class GameFunctions(GameAttributes):
     def __init__(self) -> None:
