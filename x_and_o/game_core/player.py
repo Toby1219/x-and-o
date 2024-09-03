@@ -36,4 +36,45 @@ class Player(GameFunctions):
                 except:
                     print(f"[bold red]Invalid Number[/bold red] [bold yellow]enter number (1-9)[/bold yellow]")
 
+    def playerPvP_one(self, user_position: bool=True):
+            """
+            Player is "X" and enter a valid position integer only
+            Use in player vs player game
+            """
+            self.char = 'X'
+
+            if user_position:
+                while True:                
+                    try:
+                        self.pos = int(input('\nEnter number 1-9: '))
+                        self.msg = f'{self.pos} has been taken chose another position'
+                        try:
+                            self.validator(value=self.char, position=self.pos, positions=True)
+                            break
+                        except ValueError as e:
+                            print(f"\n [bold red]{e}[/bold red]")
+                            continue
+                    except:
+                        print(f"[bold red]Invalid Number[/bold red] [bold yellow]enter number (1-9)[/bold yellow]")
+
+    def playerPvP_two(self, user_position: bool=True):
+            """
+            Player is "O" and enter a valid position integer only
+            Use in player vs player game
+            """
+            self.char = 'O'
+
+            if user_position:
+                while True:                
+                    try:
+                        self.pos = int(input('\nEnter number 1-9: '))
+                        self.msg = f'{self.pos} has been taken chose another position'
+                        try:
+                            self.validator(value=self.char, position=self.pos, positions=True)
+                            break
+                        except ValueError as e:
+                            print(f"\n [bold red]{e}[/bold red]")
+                            continue
+                    except:
+                        print(f"[bold red]Invalid Number[/bold red] [bold yellow]enter number (1-9)[/bold yellow]")
 

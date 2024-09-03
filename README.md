@@ -17,5 +17,7 @@ explanation of each files:
 other fetures:
 1. kepping of score and declearing winner at the end of the game 
 2. the game can be replayed multiple times 
+3. you can also play p vs p for you and your friend
+4. ai vs ai to see two diferent algorithim play with each other
 
 To run scripts: you need python 3 or newer version

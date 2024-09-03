@@ -54,6 +54,16 @@ class GameAttributes(Board):
         self.total_point = 0
         self.winner = ''
 
+        self.player_one = None
+        self.player_two = None
+        self.mode = ''
+        self.time = 0
+        self.valid_mode = {'easy', 'e', 'medium', 'm', 'hard', 'h'}
+        self.valid_gametype = ('ai vs ai', 'ai v ai', 'a vs a', 'a v a',  
+                               'player vs player',  'player v player', 'p vs p', 
+                               'p v p', ' ', 'none')
+
+
         log.info('Initialized Game functions')
 
 class GameFunctions(GameAttributes):
@@ -77,15 +87,16 @@ class GameFunctions(GameAttributes):
             self.total_point = f'"X": {self.player_X} "O": {self.player_O}'
             print(f'\n\n Tie Game [bold green]{self.total_point}[/bold green] \n\n Sad to see you go :cry: \n\n')       
 
-    def cleanBoard(self):
-        """ Reset Board """
-        for i in range(len(self.board)):
-            for y in range(len(self.board[i])):
-                if self.board[i][y] == 'X' or self.board[i][y] == 'O':
-                    self.board[i][y] = ' '
-        return self.board 
+    def cleaner(self):
+        """ Reset certain data for gametype and game mode"""
+        self.player_O = 0
+        self.player_X = 0
+        self.comp_char = ''
+        self.char = ''
+        self.cleanBoard()
+        self.reset_moves()
 
-    def replay(self):
+    def replay(self, *func, **kwargs):
         """ Restart game """
         while True:
             try:
@@ -101,17 +112,25 @@ class GameFunctions(GameAttributes):
             
             self.cleanBoard()
             self.reset_moves()
-			
-            self.main_build(not_replay = False)
+            
+            func[0](**kwargs)
         else:
             self.calculate_score()
+
+    def cleanBoard(self):
+        """ Reset Board """
+        for i in range(len(self.board)):
+            for y in range(len(self.board[i])):
+                if self.board[i][y] == 'X' or self.board[i][y] == 'O':
+                    self.board[i][y] = ' '
+        return self.board 
 
     def go_first(self):
         """ Player decide wether to go first or not"""
         while True:
             try:
                 conf = str(input('\nWould you like to go first: ')).lower().strip()
-                self.msg = 'You are to enter "yes", "y", "no", "n"'
+                self.msg = '\nYou are to enter "yes", "y", "no", "n"'
                 self.validator(value=conf, item=self.valid_ans, character=True)
                 break
             except ValueError as e:
@@ -142,6 +161,8 @@ class GameFunctions(GameAttributes):
         if character:
             if value not in item:
                 raise ValueError(self.msg)
+            else:
+                pass
             
         if positions:
             key_find = self.convert_positions([position], keys=True)
@@ -153,7 +174,6 @@ class GameFunctions(GameAttributes):
             else:
                 raise ValueError(self.msg)
             return self.board
-
 
     def check_wins(self)-> tuple[str, str, str]:
         """ Check for wins in Coloums, Rows and Vertical """
@@ -192,4 +212,53 @@ class GameFunctions(GameAttributes):
         
         return 0,0,0
 
+    def game_type(self):
+        """ To select gametype like Ai vs Ai, Player vs Player """
+        gameType = ' '
+        gameType = str(input(
+                '\nWould you like Ai vs Ai, Player vs Player, none: ')).lower()
+        
+        if (gameType in ['ai vs ai', 'ai v ai', 'a vs a', 'a v a'] and 
+            self.mode == 'Easy'):
+            self.time = 2
+            self.player_one = self.computer_player
+            self.player_two = self.computer_player_mid
+            return 1
 
+        if (gameType in ['ai vs ai', 'ai v ai', 'a vs a', 'a v a'] and 
+            self.mode in ['Meduim', 'Hard']):
+            self.time = 2
+            self.player_one = self.computer_player_mid
+            self.player_two = self.computer_player_had
+            return 1
+        
+        if gameType in ['player vs player', 'player v player', 'p vs p','p v p']:
+            self.player_one = self.playerPvP_one
+            self.player_two = self.playerPvP_two
+            return 1
+        elif gameType in [' ', 'none']:
+            return 0
+              
+    def select_mode(self):
+        """ To select which kind of ai you want easy, meduim hard """
+        while True:
+            mode = str(input('\nSelect Mode (easy, meduim, hard): '))
+            self.msg = 'Select from (easy, meduim, hard) or (e, m, h)'
+            try:
+                self.validator(value=mode, item=self.valid_mode, character=True)
+                break
+            except ValueError as e:
+                print(f'[bold red]{e}[/bold red]')
+        if mode == 'easy' or mode == 'e':
+            self.mode = 'Easy'
+            self.player_two = self.computer_player
+
+        elif mode == 'meduim' or mode == 'm':
+            self.mode = 'Meduim'
+            self.player_two = self.computer_player_mid
+        
+        elif mode == 'hard' or mode == 'h':
+            self.mode = 'Hard'
+            self.player_two = self.computer_player_had
+        
+        return self.mode

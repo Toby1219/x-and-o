@@ -31,14 +31,14 @@ class ComputerAi_Easy(GameFunctions):
         """
         Computer player (Easy mode just selecting random number)
         """
+        self.comp_char = 'O'
+        
         # Select computer character
         if self.char == 'X':
             self.comp_char = 'O'
         elif self.char == 'O':
             self.comp_char = 'X'
-        else:
-            self.comp_char = 'O'
-
+        
         #generating random moves
         def gen_randomNumber(value: list) -> int:
             try:
