@@ -1,15 +1,10 @@
 from rich import print
-from .Logs import logger_func
-
-log = logger_func('board.py', 'board')
 
 class Board:
     def __init__(self) -> None:
         self.board = [[' ', ' ', ' '],
                       [' ', ' ', ' '],
                       [' ', ' ', ' ']]
-        
-        log.info(f'Board initialization {self.board}')
 
     def draw_board(self):
         """ Draws Board"""
@@ -24,4 +19,3 @@ class Board:
                 st2 = ''.join(v)
                 yield st2
             count += 1 
-        log.info('Done drawing board') 
